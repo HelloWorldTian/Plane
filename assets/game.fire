@@ -41,8 +41,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 0.1,
-      "y": 0.1,
+      "x": 0.16787088939076397,
+      "y": 0.16787088939076397,
       "z": 1
     },
     "_quat": {
@@ -1626,7 +1626,7 @@
       "__id__": 34
     },
     "_enabled": true,
-    "_type": 2,
+    "_type": 1,
     "_allowSleep": true,
     "_gravityScale": 0,
     "_linearDamping": 0,
