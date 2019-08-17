@@ -14,6 +14,7 @@ cc.Class({
     
         bullet: cc.Prefab,
         player: require("Player"),
+        bulletClip:cc.AudioClip,
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -49,9 +50,11 @@ cc.Class({
             this.createOneBullet(px, py);
             this.createOneBullet(px + offset, py);
             this.createOneBullet(px - offset, py);
+            cc.audioEngine.play(this.bulletClip);
         }else
         {
             this.createOneBullet(px, py);
+            cc.audioEngine.play(this.bulletClip);
         }   
     },
 

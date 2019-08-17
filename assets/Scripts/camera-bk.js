@@ -27,6 +27,7 @@ cc.Class({
         //         this._bar = value;
         //     }
         // },
+        speed:100
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -34,13 +35,19 @@ cc.Class({
     // onLoad () {},
 
     start () {
-        cc.tween(this.node)
-            .repeatForever(
-                cc.tween()
-                .to(10, {position: cc.v2(0, 1440)})
-                .call(()=>{this.node.y = 0;})
-            ).start();
+        // cc.tween(this.node)
+        //     .repeatForever(
+        //         cc.tween()
+        //         .to(10, {position: cc.v2(0, -1360)})
+        //         .call(()=>{this.node.y = 1440;})
+        //     ).start();
     },
 
-    // update (dt) {},
+    update (dt) {
+        this.node.y-=dt*this.speed;
+        if(this.node.y<-1360)
+        {
+            this.node.y=1440;
+        }
+    },
 });

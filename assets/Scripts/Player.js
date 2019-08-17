@@ -9,7 +9,8 @@ cc.Class({
         Power:{
             default:1,
             type:cc.Float
-        }
+        },
+        Shield:cc.Node
     },
 
     // LIFE-CYCLE CALLBACKS:
