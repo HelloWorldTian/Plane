@@ -7,7 +7,10 @@
 // Learn life-cycle callbacks:
 //  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] https://www.cocos2d-x.org/docs/creator/manual/en/scripting/life-cycle-callbacks.html
-
+var BulletType=cc.Enum({
+    PlayerBullet:0,
+    EnemyBullet:1,
+});
 cc.Class({
     extends: cc.Component,
 
@@ -28,7 +31,12 @@ cc.Class({
         //     }
         // },
         speed: 800,
-        pool: null
+        pool: null,
+        hasInit:false,
+        bulletType:{
+            default:BulletType.PlayerBullet,
+            type:cc.Enum(BulletType)
+        }
     },
 
     reuse (pool) {
@@ -50,11 +58,28 @@ cc.Class({
     // onLoad () {},
 
     //start () {
+    InitBullet(_bulletType)
+    {
+        this.hasInit=true;
+
+        this.bulletType=_bulletType;
+    },
 
     update (dt) {
-        this.node.y += this.speed * dt;
-        if (this.node.y > 800) {
-            this.pool.put(this.node);
+        if(!this.hasInit)return;
+        if(this.bulletType==BulletType.PlayerBullet)
+        {
+            this.node.y += this.speed * dt;
+            if (this.node.y > 800) {
+                this.pool.put(this.node);
+            }
+        }else if(this.bulletType==BulletType.EnemyBullet)
+        {
+            this.node.y -= this.speed * dt;
+            if (this.node.y <-790) {
+                this.pool.put(this.node);
+            }
         }
+        
     },
 });

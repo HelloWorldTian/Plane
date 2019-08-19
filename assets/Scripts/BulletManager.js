@@ -7,15 +7,22 @@
 // Learn life-cycle callbacks:
 //  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] https://www.cocos2d-x.org/docs/creator/manual/en/scripting/life-cycle-callbacks.html
+
+var BulletType=cc.Enum({
+    PlayerBullet:0,
+    EnemyBullet:1,
+});
 cc.Class({
     extends: cc.Component,
-
     properties: {
     
         bullet: cc.Prefab,
         player: require("Player"),
         bulletClip:cc.AudioClip,
+        
+
     },
+    
 
     // LIFE-CYCLE CALLBACKS:
     onLoad () {
@@ -47,23 +54,24 @@ cc.Class({
         //cc.log(this.player.GetIsTurning());
         if(this.player.isTurning)
         {
-            this.createOneBullet(px, py);
-            this.createOneBullet(px + offset, py);
-            this.createOneBullet(px - offset, py);
+            this.createOneBullet(px, py,BulletType.PlayerBullet);
+            this.createOneBullet(px + offset, py,BulletType.PlayerBullet);
+            this.createOneBullet(px - offset, py,BulletType.PlayerBullet);
             cc.audioEngine.play(this.bulletClip);
         }else
         {
-            this.createOneBullet(px, py);
+            this.createOneBullet(px, py,BulletType.PlayerBullet);
             cc.audioEngine.play(this.bulletClip);
         }   
     },
 
-    createOneBullet (x, y) {
+    createOneBullet (x, y,bulletType) {
         let b = this.pool.get(this.pool);
         if (!b) b = instantiate(this.bullet);
         b.parent = this.node;
         b.x = x;
         b.y = y;
+        b.getComponent("bullet").InitBullet(bulletType);
     }
     // update (dt) {},
 });
