@@ -16,7 +16,8 @@ cc.Class({
     extends: cc.Component,
     properties: {
     
-        bullet: cc.Prefab,
+        playerBullet: cc.Prefab,
+        enemyBullet: cc.Prefab,
         player: require("Player"),
         bulletClip:cc.AudioClip,
         
@@ -29,7 +30,7 @@ cc.Class({
         cc.director.getCollisionManager().enabled = true;
         this.pool = new cc.NodePool('bullet');
         for (let i = 0; i < 100; i++) {
-            this.pool.put(cc.instantiate(this.bullet));
+            this.pool.put(cc.instantiate(this.playerBullet));
         }
         
     },
@@ -57,17 +58,23 @@ cc.Class({
             this.createOneBullet(px, py,BulletType.PlayerBullet);
             this.createOneBullet(px + offset, py,BulletType.PlayerBullet);
             this.createOneBullet(px - offset, py,BulletType.PlayerBullet);
-            cc.audioEngine.play(this.bulletClip);
+            cc.audioEngine.playEffect(this.bulletClip);
         }else
         {
             this.createOneBullet(px, py,BulletType.PlayerBullet);
-            cc.audioEngine.play(this.bulletClip);
+            cc.audioEngine.playEffect(this.bulletClip);
         }   
     },
 
     createOneBullet (x, y,bulletType) {
         let b = this.pool.get(this.pool);
-        if (!b) b = instantiate(this.bullet);
+        if(bulletType==BulletType.PlayerBullet)
+        {
+            if (!b) b = cc.instantiate(this.playerBullet);
+        }else
+        {
+            if (!b) b = cc.instantiate(this.enemyBullet);
+        }
         b.parent = this.node;
         b.x = x;
         b.y = y;

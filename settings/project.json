@@ -14,6 +14,9 @@
       false,
       null,
       true,
+      true,
+      null,
+      true,
       true
     ],
     [
@@ -21,6 +24,10 @@
       false,
       false,
       false,
+      true,
+      null,
+      null,
+      true,
       true
     ],
     [
@@ -49,6 +56,27 @@
       true,
       true,
       false
+    ],
+    [
+      false,
+      false,
+      true,
+      true,
+      false,
+      false,
+      false,
+      false
+    ],
+    [
+      false,
+      false,
+      true,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false
     ]
   ],
   "design-resolution-height": 640,
@@ -69,11 +97,13 @@
   "group-list": [
     "default",
     "background",
-    "player",
-    "bullet",
-    "enemy",
+    "playerPlane",
+    "playerBullet",
+    "enemyUFO",
     "star",
-    "wall"
+    "wall",
+    "enemyBullet",
+    "enemyPlane"
   ],
   "last-module-event-record-time": 1565840035510,
   "simulator-orientation": false,

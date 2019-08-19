@@ -15,24 +15,10 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        // foo: {
-        //     // ATTRIBUTES:
-        //     default: null,        // The default value will be used only when the component attaching
-        //                           // to a node for the first time
-        //     type: cc.SpriteFrame, // optional, default is typeof default
-        //     serializable: true,   // optional, default is true
-        // },
-        // bar: {
-        //     get () {
-        //         return this._bar;
-        //     },
-        //     set (value) {
-        //         this._bar = value;
-        //     }
-        // },
         speed: 800,
+        destroyHeight:800,
         pool: null,
-        hasInit:false,
+        hasInit:true,
         bulletType:{
             default:BulletType.PlayerBullet,
             type:cc.Enum(BulletType)
@@ -63,20 +49,29 @@ cc.Class({
         this.hasInit=true;
 
         this.bulletType=_bulletType;
+        if(this.bulletType==BulletType.PlayerBullet)
+        {
+            this.speed*=1;
+            this.destroyHeight=800;
+        }else if(this.bulletType==BulletType.EnemyBullet)
+        {
+            this.speed*=-1;
+            this.destroyHeight=-790;
+            this.node.rotation=-180;
+        }
     },
 
     update (dt) {
         if(!this.hasInit)return;
+        this.node.y += this.speed * dt;
         if(this.bulletType==BulletType.PlayerBullet)
         {
-            this.node.y += this.speed * dt;
-            if (this.node.y > 800) {
+            if (this.node.y > this.destroyHeight) {
                 this.pool.put(this.node);
             }
         }else if(this.bulletType==BulletType.EnemyBullet)
         {
-            this.node.y -= this.speed * dt;
-            if (this.node.y <-790) {
+            if (this.node.y <this.destroyHeight) {
                 this.pool.put(this.node);
             }
         }

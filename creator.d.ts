@@ -1872,19 +1872,18 @@ declare namespace cc {
 		*/
 		static isMusicPlaying(): boolean;		
 		/**
-		!#en Play effect audio.
-		!#zh 播放音效
-		@param clip The audio clip to play.
-		@param loop Whether the music loop or not.
-		
-		@example 
-		```js
-		cc.loader.loadRes(url, cc.AudioClip, function (err, clip) {
+         !#en Play effect audio.
+         !#zh 播放音效
+         @param clip The audio clip to play.
+
+         @example
+         ```js
+         cc.loader.loadRes(url, cc.AudioClip, function (err, clip) {
 		    var audioID = cc.audioEngine.playEffect(clip, false);
 		});
-		``` 
-		*/
-		static playEffect(clip: AudioClip, loop: boolean): number;		
+         ```
+         */
+		static playEffect(clip: cc.AudioClip): number;
 		/**
 		!#en Set the volume of effect audio.
 		!#zh 设置音效音量（0.0 ~ 1.0）。
