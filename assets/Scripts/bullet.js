@@ -15,10 +15,11 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        speed: 800,
+        speedNow:800,
+        initSpeed:800,
         destroyHeight:800,
         pool: null,
-        hasInit:true,
+        hasInit:false,
         bulletType:{
             default:BulletType.PlayerBullet,
             type:cc.Enum(BulletType)
@@ -36,7 +37,11 @@ cc.Class({
     
     onBeginContact: function (contact, self, other) {
         if(other.tag==2)//敌人
-          this.pool.put(this.node);
+        {
+            this.hasInit=false;
+            this.pool.put(this.node);
+        }
+
         
     },
     // LIFE-CYCLE CALLBACKS:
@@ -44,37 +49,39 @@ cc.Class({
     // onLoad () {},
 
     //start () {
-    InitBullet(_bulletType)
+    InitBullet(_bulletType,pool)
     {
-        this.hasInit=true;
-
+        this.reuse(pool);
         this.bulletType=_bulletType;
         if(this.bulletType==BulletType.PlayerBullet)
         {
-            this.speed*=1;
+            this.speedNow=this.initSpeed;
             this.destroyHeight=800;
+            this.node.rotation=0;
         }else if(this.bulletType==BulletType.EnemyBullet)
         {
-            this.speed*=-1;
+            this.speedNow=this.initSpeed*(-1);
             this.destroyHeight=-790;
             this.node.rotation=-180;
         }
+        this.hasInit=true;
     },
 
     update (dt) {
         if(!this.hasInit)return;
-        this.node.y += this.speed * dt;
+        this.node.y += this.speedNow * dt;
         if(this.bulletType==BulletType.PlayerBullet)
         {
             if (this.node.y > this.destroyHeight) {
+                this.hasInit=false;
                 this.pool.put(this.node);
             }
         }else if(this.bulletType==BulletType.EnemyBullet)
         {
             if (this.node.y <this.destroyHeight) {
+                this.hasInit=false;
                 this.pool.put(this.node);
             }
         }
-        
     },
 });

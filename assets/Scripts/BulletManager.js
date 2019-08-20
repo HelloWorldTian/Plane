@@ -16,8 +16,7 @@ cc.Class({
     extends: cc.Component,
     properties: {
     
-        playerBullet: cc.Prefab,
-        enemyBullet: cc.Prefab,
+        Bullet: cc.Prefab,
         player: require("Player"),
         bulletClip:cc.AudioClip,
         
@@ -28,9 +27,9 @@ cc.Class({
     // LIFE-CYCLE CALLBACKS:
     onLoad () {
         cc.director.getCollisionManager().enabled = true;
-        this.pool = new cc.NodePool('bullet');
+        this.pool = new cc.NodePool('bulletPool');
         for (let i = 0; i < 100; i++) {
-            this.pool.put(cc.instantiate(this.playerBullet));
+            this.pool.put(cc.instantiate(this.Bullet));
         }
         
     },
@@ -67,18 +66,13 @@ cc.Class({
     },
 
     createOneBullet (x, y,bulletType) {
-        let b = this.pool.get(this.pool);
-        if(bulletType==BulletType.PlayerBullet)
-        {
-            if (!b) b = cc.instantiate(this.playerBullet);
-        }else
-        {
-            if (!b) b = cc.instantiate(this.enemyBullet);
-        }
+        let b = this.pool.get();
+
+        if (!b) b = cc.instantiate(this.Bullet);
         b.parent = this.node;
         b.x = x;
         b.y = y;
-        b.getComponent("bullet").InitBullet(bulletType);
+        b.getComponent("bullet").InitBullet(bulletType,this.pool);
     }
     // update (dt) {},
 });

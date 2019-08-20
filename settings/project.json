@@ -12,7 +12,7 @@
       false,
       false,
       false,
-      null,
+      true,
       true,
       true,
       null,
@@ -22,7 +22,7 @@
     [
       false,
       false,
-      false,
+      true,
       false,
       true,
       null,
@@ -98,12 +98,12 @@
     "default",
     "background",
     "playerPlane",
-    "playerBullet",
+    "Bullet",
     "enemyUFO",
     "star",
     "wall",
-    "enemyBullet",
-    "enemyPlane"
+    "enemyPlane",
+    ""
   ],
   "last-module-event-record-time": 1565840035510,
   "simulator-orientation": false,
@@ -112,6 +112,5 @@
     "width": 960
   },
   "use-customize-simulator": true,
-  "use-project-simulator-setting": false,
-  "start-scene": "current"
+  "use-project-simulator-setting": false
 }

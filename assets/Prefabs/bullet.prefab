@@ -12,12 +12,12 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "enemyBullet",
+    "_name": "bullet",
     "_objFlags": 0,
     "_parent": null,
     "_children": [],
     "_active": true,
-    "_level": 3,
+    "_level": 1,
     "_components": [
       {
         "__id__": 2
@@ -76,7 +76,7 @@
     },
     "_skewX": 0,
     "_skewY": 0,
-    "groupIndex": 7,
+    "groupIndex": 3,
     "_id": ""
   },
   {
@@ -115,11 +115,12 @@
       "__id__": 1
     },
     "_enabled": true,
-    "speed": 800,
+    "speedNow": 800,
+    "initSpeed": 800,
     "destroyHeight": 800,
     "pool": null,
-    "hasInit": true,
-    "bulletType": 1,
+    "hasInit": false,
+    "bulletType": 0,
     "_id": ""
   },
   {
