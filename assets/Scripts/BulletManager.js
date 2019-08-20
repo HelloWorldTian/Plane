@@ -46,8 +46,7 @@ cc.Class({
         this.GameManager=GameManager;
     },
     createManyBullet () {
-        if(this.GameManager.GameOver)return;
-        if(!this.GameManager.IsTouching)return;
+        
         let px = this.player.node.x;
         let py = this.player.node.y + 80;
         let offset = 45;
@@ -57,22 +56,24 @@ cc.Class({
             this.createOneBullet(px, py,BulletType.PlayerBullet);
             this.createOneBullet(px + offset, py,BulletType.PlayerBullet);
             this.createOneBullet(px - offset, py,BulletType.PlayerBullet);
-            cc.audioEngine.playEffect(this.bulletClip);
+            
         }else
         {
             this.createOneBullet(px, py,BulletType.PlayerBullet);
-            cc.audioEngine.playEffect(this.bulletClip);
         }   
     },
 
     createOneBullet (x, y,bulletType) {
+        if(this.GameManager.GameOver)return;
+        if(!this.GameManager.IsTouching)return;
+        cc.audioEngine.playEffect(this.bulletClip);
         let b = this.pool.get();
 
         if (!b) b = cc.instantiate(this.Bullet);
         b.parent = this.node;
         b.x = x;
         b.y = y;
-        b.getComponent("bullet").InitBullet(bulletType,this.pool);
+        b.getComponent("bullet").InitBullet(bulletType,this.pool,this.GameManager);
     }
     // update (dt) {},
 });

@@ -1,6 +1,7 @@
 
 var Star=require("Star");
 var Player=require("Player");
+var Bullet=require("bullet");
 cc.Class({
     extends: cc.Component,
 
@@ -63,9 +64,8 @@ cc.Class({
     {
         this.GameManager=GameManager;
     },   
-    onBeginContact(contact,self,other)
-    {
-        cc.log("other.tag"+other.tag);
+    onCollisionEnter (other, self) {
+
         switch(other.tag)
         {
 
@@ -73,7 +73,8 @@ cc.Class({
                     this.GameManager.SetGameOver();
                 break;
             case 1://bullet
-            
+                    this.Bullet=other.node.getComponent("bullet");
+                    if(this.Bullet.bulletType==1)return;
                     this.hp -= this.Player.getComponent("Player").Power;
                     this.GameManager.AddScore(this.Player.getComponent("Player").Power);
                     this.hpLab.string = this.hp + '';
@@ -99,18 +100,8 @@ cc.Class({
                         star.y=this.node.y;
                     }
                 break;               
-        }
+        }           
     },
-    // onCollisionEnter (other, self) {
-
-    //     if(other.tag==1)
-    //     {
-    //         this.GameManager.SetGameOver();
-    //     }else if(other.tag==0)
-    //     {
-           
-    //     }              
-    // },
 
    update (dt) {
        if(!this.hasInitSpeed)return;

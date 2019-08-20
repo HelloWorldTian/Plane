@@ -11,6 +11,7 @@ var BulletType=cc.Enum({
     PlayerBullet:0,
     EnemyBullet:1,
 });
+var enemy=require("enemy");
 cc.Class({
     extends: cc.Component,
 
@@ -30,45 +31,38 @@ cc.Class({
         this.pool = pool;
     },
 
-    // onCollisionEnter (other, self) {
-    //     if(other.tag==2)//敌人
-    //       this.pool.put(this.node);
-    // },
-    
-    onBeginContact: function (contact, self, other) {
-        if(other.tag==2)//敌人
-        {
-            this.hasInit=false;
-            this.pool.put(this.node);
-        }
-
-        
+    onCollisionEnter(other,self)
+    {
+        this.hasInit=false;
+        this.pool.put(this.node);       
     },
     // LIFE-CYCLE CALLBACKS:
 
     // onLoad () {},
 
     //start () {
-    InitBullet(_bulletType,pool)
+    InitBullet(_bulletType,pool,GameManager)
     {
         this.reuse(pool);
         this.bulletType=_bulletType;
+        this.GameManager=GameManager;
         if(this.bulletType==BulletType.PlayerBullet)
         {
             this.speedNow=this.initSpeed;
             this.destroyHeight=800;
-            this.node.rotation=0;
+            this.node.angle=0;
         }else if(this.bulletType==BulletType.EnemyBullet)
         {
             this.speedNow=this.initSpeed*(-1);
             this.destroyHeight=-790;
-            this.node.rotation=-180;
+            this.node.angle=-180;
         }
         this.hasInit=true;
     },
 
     update (dt) {
         if(!this.hasInit)return;
+       
         this.node.y += this.speedNow * dt;
         if(this.bulletType==BulletType.PlayerBullet)
         {

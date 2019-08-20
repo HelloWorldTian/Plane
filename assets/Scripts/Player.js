@@ -27,27 +27,23 @@ cc.Class({
         this.Second=0;
         this.Power=1;
     },
-    onBeginContact(contact,self,other)
-    {
+    onCollisionEnter (other, self) {
 
-        if(other.tag==3)//star
+        switch(other.tag)
         {
-            other.parent=null;
-            other.node.destroy();
-            this.isTurning=true;
-        }
-    },
-    // onCollisionEnter (other, self) {
 
-    //     if(other.tag==3)//吃到星星
-    //     {
-    //         other.parent=null;
-    //         other.node.destroy();
-    //         this.isTurning=true;
-    //         //this.Power+=1;
-    //     }
-        
-    // },
+            case 1://bullet
+                    this.Bullet=other.node.getComponent("bullet");
+                    if(this.Bullet.bulletType==0)return;
+                    this.Bullet.GameManager.SetGameOver();
+                break;
+            case 3://吃到星星
+                    other.parent=null;
+                    other.node.destroy();
+                    this.isTurning=true;
+                break;
+        }       
+    },
     GetIsTurning()
     {
         return this.isTurning;

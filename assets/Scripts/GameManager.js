@@ -37,7 +37,9 @@ cc.Class({
         this.Canvas.on(cc.Node.EventType.TOUCH_END,this.OnTouchEnd,this);
         this.Canvas.on(cc.Node.EventType.TOUCH_CANCEL,this.OnTouchEnd,this);
         this.physicsManager=cc.director.getPhysicsManager();
+        this.collisionManager=cc.director.getCollisionManager();
         this.physicsManager.enabled=true;
+        this.collisionManager.enabled=true;
     },
 
     start () {
@@ -53,6 +55,7 @@ cc.Class({
             this.IntroduceUI.active=false;
         }
         this.physicsManager.enabled=true;
+        this.collisionManager.enabled=true;
     },
     OnTouchEnd(event)
     {
@@ -63,6 +66,7 @@ cc.Class({
             this.IntroduceUI.active=true;
         }
         this.physicsManager.enabled=false;
+        this.collisionManager.enabled=false;
     },
 
     BtnStartGameClick()
@@ -83,6 +87,7 @@ cc.Class({
         this.Second=0;
         this.SurvivalTime=0;
         this.physicsManager.enabled=true;
+        this.collisionManager.enabled=true;
     },
 
     ShowIntroduce(value)
@@ -112,6 +117,7 @@ cc.Class({
         this.StarPool.removeAllChildren();
         this.TouchManager.GameStart=false;
         this.physicsManager.enabled=false;  
+        this.collisionManager.enabled=false;
     },
     AddScore(num)
     {
