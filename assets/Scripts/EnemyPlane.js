@@ -106,6 +106,8 @@ cc.Class({
 
     },
     update (dt) {
+        if(this.GameManager.GameOver)return;
+        if(!this.GameManager.IsTouching)return;
        this.node.x += this.speed_x * dt * this.dir;
        if (this.node.x < -cc.winSize.width/2 + this.node.width/2) this.dir = 1;
        if (this.node.x > cc.winSize.width/2 - this.node.width/2) this.dir = -1;

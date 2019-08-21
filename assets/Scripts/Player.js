@@ -10,7 +10,8 @@ cc.Class({
             default:1,
             type:cc.Float
         },
-        Shield:cc.Node
+        Shield:cc.Node,
+        explosionPre:cc.Prefab,
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -31,22 +32,30 @@ cc.Class({
 
         switch(other.tag)
         {
-
             case 1://bullet
                     this.Bullet=other.node.getComponent("bullet");
                     if(this.Bullet.bulletType==0)return;
+                    this.boom();
                     this.Bullet.GameManager.SetGameOver();
+                break;
+            case 2:
+                    this.boom();
                 break;
             case 3://吃到星星
                     other.parent=null;
                     other.node.destroy();
                     this.isTurning=true;
                 break;
-        }       
+        }   
+          
     },
-    GetIsTurning()
+    boom()
     {
-        return this.isTurning;
+        let explosionPool=cc.find("Canvas/Containers/ExplosionPool");
+        let explosion=cc.instantiate(this.explosionPre);
+        explosion.parent=explosionPool;
+        explosion.x=this.node.x;
+        explosion.y=this.node.y;  
     },
     update (dt) {
         if(!this.isTurning)return;
@@ -56,7 +65,6 @@ cc.Class({
             this.Second=0;
             this.isTurning=false;
             this.Power=1;
-            cc.log("Turn over");
         }
     },
 });

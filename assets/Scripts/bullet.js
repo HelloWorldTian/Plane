@@ -12,6 +12,7 @@ var BulletType=cc.Enum({
     EnemyBullet:1,
 });
 var enemy=require("enemy");
+var bullet=require("bullet");
 cc.Class({
     extends: cc.Component,
 
@@ -24,7 +25,9 @@ cc.Class({
         bulletType:{
             default:BulletType.PlayerBullet,
             type:cc.Enum(BulletType)
-        }
+        },
+        playerBulletImg:cc.Sprite,
+        enemyBulletImg:cc.Sprite,
     },
 
     reuse (pool) {
@@ -38,10 +41,14 @@ cc.Class({
             case 0://player
                 if(this.bulletType==0)return;
                 break;
+            case 1:
+                if(other.node.getComponent("bullet").bulletType==this.bulletType)return;
+                break;
             case 2://enemy
                 if(this.bulletType==1 )return;
                 break;
         }
+        
         this.hasInit=false;
         this.pool.put(this.node);       
     },
@@ -60,18 +67,26 @@ cc.Class({
             this.speedNow=this.initSpeed;
             this.destroyHeight=800;
             this.node.angle=0;
+            this.node.getComponent(cc.Sprite).spriteFrame=this.playerBulletImg.spriteFrame;
         }else if(this.bulletType==BulletType.EnemyBullet)
         {
             this.speedNow=this.initSpeed*(-1);
             this.destroyHeight=-790;
             this.node.angle=-180;
+            this.node.getComponent(cc.Sprite).spriteFrame=this.enemyBulletImg.spriteFrame;
         }
         this.hasInit=true;
     },
 
     update (dt) {
         if(!this.hasInit)return;
-       
+        if(this.GameManager.GameOver)
+        {
+            this.hasInit=false;
+            this.pool.put(this.node);
+            return;
+        }
+        if(!this.GameManager.IsTouching)return;
         this.node.y += this.speedNow * dt;
         if(this.bulletType==BulletType.PlayerBullet)
         {

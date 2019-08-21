@@ -19,8 +19,6 @@ cc.Class({
         Bullet: cc.Prefab,
         player: require("Player"),
         bulletClip:cc.AudioClip,
-        
-
     },
     
 

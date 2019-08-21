@@ -34,6 +34,7 @@ cc.Class({
 
     onLoad () {
         this.Canvas.on(cc.Node.EventType.TOUCH_START,this.OnTouchStart,this);
+        this.Canvas.on(cc.Node.EventType.TOUCH_MOVE,this.OnTouchStart,this);
         this.Canvas.on(cc.Node.EventType.TOUCH_END,this.OnTouchEnd,this);
         this.Canvas.on(cc.Node.EventType.TOUCH_CANCEL,this.OnTouchEnd,this);
         this.physicsManager=cc.director.getPhysicsManager();
@@ -84,6 +85,7 @@ cc.Class({
         this.ScoreUI.active=true;
         this.Score=0;
         this.ScoreLabel.active=true;
+        this.ScoreLabel.string="score:"+this.Score;
         this.Second=0;
         this.SurvivalTime=0;
         this.physicsManager.enabled=true;
@@ -94,6 +96,7 @@ cc.Class({
     {
         this.IntroduceUI.active=value;
         this.GameOver=false;
+        this.IsTouching=false;
         this.EnemyManager.InitGame(this);
         this.BulletManager.InitGame(this);  
         this.TouchManager.InitGame(this);  
