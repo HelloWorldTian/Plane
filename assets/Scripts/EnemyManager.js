@@ -25,7 +25,7 @@ cc.Class({
        if(this.GameManager.GameOver)return;
        if(!this.GameManager.IsTouching)return;
        var temp = Math.random();
-        if(temp>0.5)
+        if(temp>0.2)
         {
             let e = cc.instantiate(this.enemy);
             e.getComponent(enemy).SetGameManager(this.GameManager);     

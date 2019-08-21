@@ -33,6 +33,15 @@ cc.Class({
 
     onCollisionEnter(other,self)
     {
+        switch(other.tag)
+        {
+            case 0://player
+                if(this.bulletType==0)return;
+                break;
+            case 2://enemy
+                if(this.bulletType==1 )return;
+                break;
+        }
         this.hasInit=false;
         this.pool.put(this.node);       
     },
